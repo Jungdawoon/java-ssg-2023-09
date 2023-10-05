@@ -3,6 +3,7 @@ package com.jdw.java.ssg;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 /*
  * 		10/5 수업 equals, startsWith 배움
  * 		
@@ -86,16 +87,18 @@ public class Main {
 					Article article = articles.get(i);
 					if(article.id == id) {
 						//found = true;
-						foundArticle = article;
+						foundArticle = article;	
+						
 						break;
 					}
 				}
 				//foundArticle이 애초에 null이면 게시물이 없다는 의미이기 때문에 found구문이 필요없어짐.
-				
+			
 				if(foundArticle == null) {
 					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
 					continue;
 				}
+			
 				//여기서 else를 주석처리한 이유는 위 if문에 continue구문이 있기때문에 굳이 else할 필요가 없다.
 				//else 
 				{
@@ -106,6 +109,33 @@ public class Main {
 					continue;
 				}
 				
+			}
+			else if (command.startsWith("article delete ")) {
+				String[] commandBits = command.split(" ");
+				int id = Integer.parseInt(commandBits[2]);
+
+				int foundIndex = -1;
+
+				for (int i = 0; i < articles.size(); i++) {
+					Article article = articles.get(i);
+
+					if (article.id == id) {
+						foundIndex = i;
+						break;
+					}
+				}
+				//foundIndex로 인해 다시 바뀜, -1일경우 id가 없다는 의미
+				if (foundIndex == -1) {
+					System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+					continue;
+				}
+				//게시물 삭제
+				// size() 	--> 3
+				// index	-->0,1,2,
+				// id		-->1,2,3,
+				
+				articles.remove(foundIndex);
+				System.out.printf("%d번 게시물이 삭제되었습니다.\n", id);
 			}
 			else {
 				System.out.printf("%s(은)는 존재하지 않는 명령어 입니다.\n", command);
